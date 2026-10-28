@@ -1,0 +1,302 @@
+{
+  "classes": [
+    {
+      "id": "cls-7a",
+      "name": "VII-A",
+      "grade": 7,
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cls-7b",
+      "name": "VII-B",
+      "grade": 7,
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cls-7c",
+      "name": "VII-C",
+      "grade": 7,
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cls-8a",
+      "name": "VIII-A",
+      "grade": 8,
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cls-8b",
+      "name": "VIII-B",
+      "grade": 8,
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cls-8c",
+      "name": "VIII-C",
+      "grade": 8,
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cls-9a",
+      "name": "IX-A",
+      "grade": 9,
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cls-9b",
+      "name": "IX-B",
+      "grade": 9,
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cls-9c",
+      "name": "IX-C",
+      "grade": 9,
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    }
+  ],
+  "students": [
+    {
+      "id": "std-001",
+      "nisn": "0081234501",
+      "full_name": "Ahmad Faiz Pratama",
+      "birth_date": "2011-05-14",
+      "class_id": "cls-7a",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-002",
+      "nisn": "0081234502",
+      "full_name": "Anisa Citra Lestari",
+      "birth_date": "2011-08-22",
+      "class_id": "cls-7a",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-003",
+      "nisn": "0081234503",
+      "full_name": "Bayu Arya Mahendra",
+      "birth_date": "2011-02-10",
+      "class_id": "cls-7b",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-004",
+      "nisn": "0081234504",
+      "full_name": "Dinda Ayu Maharani",
+      "birth_date": "2011-11-03",
+      "class_id": "cls-7b",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-005",
+      "nisn": "0081234505",
+      "full_name": "Eko Wahyudi",
+      "birth_date": "2010-06-18",
+      "class_id": "cls-8a",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-006",
+      "nisn": "0081234506",
+      "full_name": "Farhan Rizky Maulana",
+      "birth_date": "2010-09-25",
+      "class_id": "cls-8a",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-007",
+      "nisn": "0081234507",
+      "full_name": "Gita Permata Sari",
+      "birth_date": "2010-03-30",
+      "class_id": "cls-8b",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-008",
+      "nisn": "0081234508",
+      "full_name": "Hafiz Danendra Putra",
+      "birth_date": "2010-12-15",
+      "class_id": "cls-8c",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-009",
+      "nisn": "0081234509",
+      "full_name": "Indah Cahyani",
+      "birth_date": "2009-07-08",
+      "class_id": "cls-9a",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-010",
+      "nisn": "0081234510",
+      "full_name": "Jovan Nathaniel",
+      "birth_date": "2009-04-12",
+      "class_id": "cls-9a",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-011",
+      "nisn": "0081234511",
+      "full_name": "Kayla Safira Ramadhani",
+      "birth_date": "2009-10-01",
+      "class_id": "cls-9b",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "std-012",
+      "nisn": "0081234512",
+      "full_name": "Luthfi Hakim",
+      "birth_date": "2009-01-20",
+      "class_id": "cls-9c",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "cnd-01",
+      "ballot_number": 1,
+      "chair_name": "Muhammad Fathir Rahman",
+      "vice_chair_name": "Alya Zahra Salsabila",
+      "photo_path": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+      "vision": "Mewujudkan OSIS SMPN 2 Bogor yang progresif, berakhlak mulia, berprestasi dalam sains & seni, serta responsif terhadap aspirasi seluruh warga sekolah.",
+      "mission": "1. Menyelenggarakan program penguatan karakter dan literasi digital secara berkala.\n2. Mengoptimalkan ekstrakurikuler sebagai wadah pengembangan talenta berdaya saing nasional.\n3. Menyediakan kanal aspirasi digital \"Halo OSIS\" yang transparan dan cepat tanggap.\n4. Menginisiasi program Green School & peduli lingkungan hidup.",
+      "slogan": "Bersama Berkarya, Nyata Menginspirasi!",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cnd-02",
+      "ballot_number": 2,
+      "chair_name": "Raditya Arya Pratama",
+      "vice_chair_name": "Clara Jessica Nugraha",
+      "photo_path": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+      "vision": "Terwujudnya siswa SMPN 2 Bogor yang kolaboratif, kreatif, melek teknologi, dan berwawasan global dengan tetap menjunjung tinggi budaya santun.",
+      "mission": "1. Mengembangkan pekan inovasi digital dan kompetisi kreativitas antarkelas (Spenda Festival).\n2. Mempererat toleransi dan persaudaraan antarseluruh angkatan melalui kegiatan keakraban positif.\n3. Revitalisasi mading dan media sosial OSIS sebagai sarana edukasi dan informasi yang menarik.\n4. Kerjasama dengan alumni dan praktisi untuk pelatihan kepemimpinan siswa.",
+      "slogan": "Inovasi Tanpa Batas, Dedikasi Tanpa Henti!",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    },
+    {
+      "id": "cnd-03",
+      "ballot_number": 3,
+      "chair_name": "Bagas Aditya Saputra",
+      "vice_chair_name": "Nadhira Putri Wardani",
+      "photo_path": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+      "vision": "Membangun sinergi harmonis antara siswa, guru, dan lingkungan sekolah demi terciptanya iklim belajar yang aman, inklusif, ceria, dan berprestasi.",
+      "mission": "1. Kampanye aktif anti-bullying, ramah anak, dan kesehatan mental remaja di lingkungan sekolah.\n2. Membuka bursa belajar tutor sebaya untuk membantu siswa menghadapi ujian dan olimpiade.\n3. Mengaktifkan forum musyawarah perwakilan kelas secara berkala dan terbuka.\n4. Menyelenggarakan Spenda Cup tahunan di bidang olahraga dan esport positif.",
+      "slogan": "Satu Hati, Satu Suara, Majukan Spenda!",
+      "is_active": true,
+      "created_at": "2026-10-28T01:14:25.372Z",
+      "updated_at": "2026-10-28T01:14:25.372Z"
+    }
+  ],
+  "settings": {
+    "id": "e0515000-0000-0000-0000-000000000001",
+    "school_name": "SMP NEGERI 2 BOGOR",
+    "school_logo_path": "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=200&q=80",
+    "election_name": "Pemilihan Ketua dan Wakil Ketua OSIS Masa Bakti 2026/2027",
+    "starts_at": "2026-10-27T01:14:25.372Z",
+    "ends_at": "2026-11-04T01:14:25.372Z",
+    "election_status": "active",
+    "publish_results": true,
+    "created_at": "2026-10-28T01:14:25.372Z",
+    "updated_at": "2026-10-28T01:14:25.372Z"
+  },
+  "tallies": {
+    "cnd-01": 4,
+    "cnd-02": 2,
+    "cnd-03": 1
+  },
+  "participation": [
+    {
+      "id": "part-01",
+      "election_id": "e0515000-0000-0000-0000-000000000001",
+      "student_id": "std-001",
+      "cast_at": "2026-10-27T20:14:25.372Z"
+    },
+    {
+      "id": "part-02",
+      "election_id": "e0515000-0000-0000-0000-000000000001",
+      "student_id": "std-002",
+      "cast_at": "2026-10-27T21:14:25.372Z"
+    },
+    {
+      "id": "part-03",
+      "election_id": "e0515000-0000-0000-0000-000000000001",
+      "student_id": "std-003",
+      "cast_at": "2026-10-27T22:14:25.372Z"
+    },
+    {
+      "id": "part-04",
+      "election_id": "e0515000-0000-0000-0000-000000000001",
+      "student_id": "std-004",
+      "cast_at": "2026-10-27T23:14:25.372Z"
+    },
+    {
+      "id": "part-05",
+      "election_id": "e0515000-0000-0000-0000-000000000001",
+      "student_id": "std-005",
+      "cast_at": "2026-10-27T23:44:25.372Z"
+    },
+    {
+      "id": "part-06",
+      "election_id": "e0515000-0000-0000-0000-000000000001",
+      "student_id": "std-006",
+      "cast_at": "2026-10-28T00:14:25.372Z"
+    },
+    {
+      "id": "prt-cc2b6a05",
+      "election_id": "e0515000-0000-0000-0000-000000000001",
+      "student_id": "std-007",
+      "cast_at": "2026-10-28T01:14:46.679Z"
+    }
+  ],
+  "admin": {
+    "id": "adm-001",
+    "username": "admin",
+    "display_name": "Administrator eOSIS",
+    "password_hash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "role": "admin"
+  },
+  "student_sessions": {
+    "st_fb93e558278283f82a06f0146fe677fe23fd54c1a1459f64": {
+      "student_id": "std-007",
+      "expires_at": 1793157290975
+    }
+  },
+  "admin_sessions": {}
+}
