@@ -1,6 +1,6 @@
 {
-  "name": "eOSIS - Sistem Pemilihan OSIS",
-  "description": "Aplikasi eOSIS Pemilihan Ketua dan Wakil Ketua OSIS SMP Negeri 2 Bogor modern, aman, dan transparan.",
+  "name": "eOSIS - Pemilihan OSIS SMP Negeri 2 Kota Bogor",
+  "description": "Aplikasi e-Voting Pemilihan Ketua dan Wakil Ketua OSIS SMP Negeri 2 Kota Bogor dengan sistem keamanan satu suara, autentikasi NISN, dan dashboard rekapitulasi real-time.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
