@@ -1,0 +1,724 @@
+# MASTER PROMPT: PEMBANGUNAN APLIKASI eOSIS
+
+## 1. PERAN DAN TUJUAN
+
+Bertindaklah sebagai senior full-stack developer, software architect, UI/UX designer, database engineer, dan application security engineer.
+
+Bangun aplikasi web full-stack bernama **eOSIS — Sistem Pemilihan Ketua dan Wakil Ketua OSIS** yang siap dikembangkan, diuji, dan diterapkan untuk pemilihan OSIS di sekolah Indonesia.
+
+Aplikasi bukan sekadar prototype, desain statis, atau mockup. Seluruh halaman, formulir, tombol, navigasi, operasi CRUD, autentikasi, penyimpanan data, upload file, proses pemilihan, validasi, dan laporan harus berfungsi serta terhubung ke backend yang sesungguhnya.
+
+Jika kredensial Supabase belum tersedia, tetap buat seluruh kode aplikasi, SQL migration, konfigurasi contoh, dan petunjuk setup. Jangan mengarang hasil integrasi atau mengklaim bahwa fitur sudah diuji apabila belum benar-benar dijalankan.
+
+Nama aplikasi: eOSIS  
+Nama sekolah awal: SMP NEGERI 2 BOGOR  
+Bahasa antarmuka: Bahasa Indonesia  
+Zona waktu: Asia/Jakarta  
+Mata uang: Tidak diperlukan  
+Target perangkat: Desktop, laptop, tablet, dan smartphone.
+
+## 2. TEKNOLOGI WAJIB
+
+Gunakan teknologi berikut:
+
+- Vue.js 3 dengan Composition API dan `<script setup>`.
+- Vite sebagai build tool.
+- JavaScript ES Modules; gunakan TypeScript jika proyek secara konsisten dibuat dengan TypeScript.
+- Bootstrap 5 untuk layout dan komponen UI.
+- Bootstrap Icons untuk ikon.
+- Vue Router untuk navigasi dan route guards.
+- Supabase PostgreSQL sebagai database.
+- Supabase Auth untuk autentikasi admin dan pengelolaan sesi.
+- Supabase Storage untuk logo sekolah dan foto kandidat.
+- Supabase Row Level Security (RLS) untuk otorisasi data.
+- PostgreSQL functions/RPC untuk transaksi voting atomik.
+- Vitest untuk unit test.
+- Vue Test Utils untuk pengujian komponen.
+- Playwright untuk pengujian end-to-end apabila lingkungan mendukungnya.
+
+Gunakan versi paket yang kompatibel dan stabil pada saat implementasi. Jangan menggunakan API yang sudah deprecated.
+
+Jangan menggunakan localStorage sebagai sumber kebenaran untuk hak suara, role, autentikasi, atau status voting. Jangan membuat data palsu seolah-olah merupakan data produksi. Data demo harus diberi label dan dipisahkan dari data sebenarnya.
+
+## 3. ROLE DAN HAK AKSES
+
+Terdapat dua role aplikasi:
+
+### A. Admin
+
+Admin dapat mengakses:
+
+1. Beranda.
+2. Kelas.
+3. Siswa/User.
+4. Calon Kandidat.
+5. Perolehan Suara.
+6. Pengaturan.
+7. Keluar.
+
+Admin dapat mengelola data sekolah dan memantau partisipasi serta hasil pemilihan, tetapi tidak boleh mengetahui hubungan antara identitas siswa dan kandidat yang dipilih.
+
+### B. User/Siswa
+
+Siswa dapat:
+
+1. Login menggunakan NISN dan tanggal lahir.
+2. Melihat biodata sendiri.
+3. Melihat status hak suara.
+4. Melihat daftar kandidat yang aktif.
+5. Memberikan satu suara jika memenuhi syarat.
+6. Melihat konfirmasi dan status bahwa suara telah tercatat.
+7. Keluar atau kembali ke halaman login.
+
+Siswa tidak boleh mengakses dashboard admin, data siswa lain, data pemilih secara massal, atau data suara individu.
+
+Role harus ditentukan dan divalidasi oleh backend/database. Jangan mempercayai role yang dikirim melalui request atau diubah di browser.
+
+## 4. DESAIN UI/UX
+
+Buat tampilan modern, profesional, bersih, rapi, dan mudah digunakan oleh warga sekolah.
+
+Identitas visual:
+- Warna utama biru tua.
+- Warna pendukung biru muda, putih, dan abu-abu netral.
+- Gunakan ruang kosong yang cukup.
+- Gunakan tipografi yang mudah dibaca.
+- Gunakan kartu statistik, tabel, badge status, modal konfirmasi, grafik, dan notifikasi.
+- Gunakan logo sekolah dari Supabase Storage jika tersedia.
+- Jangan menggunakan emoji sebagai pengganti ikon antarmuka utama.
+- Tambahkan skeleton loading, empty state, error state, dan konfirmasi untuk tindakan penting.
+- Sediakan label formulir, pesan validasi, fokus keyboard, kontras warna yang baik, dan aksesibilitas dasar.
+
+Layout admin:
+- Sidebar dengan logo sekolah, nama aplikasi, dan menu navigasi.
+- Sidebar dapat diciutkan di desktop.
+- Pada smartphone, sidebar berubah menjadi offcanvas atau menu drawer.
+- Header menampilkan judul halaman, periode pemilihan, dan profil admin.
+- Konten utama responsif tanpa horizontal overflow yang tidak perlu.
+
+Layout siswa:
+- Sederhana, fokus pada proses pemilihan.
+- Gunakan header berisi logo dan nama sekolah.
+- Tampilkan kartu biodata, status hak suara, serta kartu kandidat.
+- Tombol aksi harus jelas dan mudah digunakan pada perangkat sentuh.
+
+Jangan membuat semua halaman dalam satu komponen besar. Gunakan komponen reusable.
+
+## 5. HALAMAN LOGIN
+
+### Login admin
+
+Buat halaman login admin dengan:
+- Username atau email sesuai rancangan autentikasi.
+- Password.
+- Tombol tampil/sembunyikan password.
+- Validasi formulir.
+- Indikator proses login.
+- Pesan kesalahan yang aman.
+- Penanganan sesi berakhir.
+- Logout yang membersihkan sesi.
+
+Admin harus dibuat melalui proses provisioning yang aman, misalnya melalui Supabase Dashboard atau skrip administratif yang hanya berjalan di lingkungan tepercaya.
+
+Jangan menyediakan registrasi admin publik.
+
+Jangan menyimpan password admin dalam plaintext. Gunakan Supabase Auth dan mekanisme hashing password yang dikelola oleh layanan tersebut.
+
+### Login siswa
+
+Formulir berisi:
+- NISN.
+- Tanggal lahir.
+- Tombol Masuk.
+- Pesan kesalahan jika data tidak valid.
+
+NISN harus divalidasi formatnya, tetapi tetap disimpan sebagai string agar angka nol di depan tidak hilang.
+
+Tanggal lahir harus divalidasi dengan format tanggal yang benar.
+
+PENTING: jangan menjadikan query publik ke tabel siswa berdasarkan NISN dan tanggal lahir sebagai mekanisme autentikasi.
+
+Implementasikan endpoint backend yang aman, misalnya Supabase Edge Function, untuk memverifikasi kredensial siswa. Gunakan mekanisme autentikasi yang dirancang khusus untuk siswa dengan sesi berumur terbatas dan identitas yang diverifikasi server.
+
+Pertimbangkan penggunaan identitas internal siswa, token sesi yang aman, rate limiting, dan mekanisme pemulihan sesi yang tidak membocorkan kredensial.
+
+Jangan mengirimkan password, tanggal lahir, atau hash kredensial ke frontend kecuali benar-benar diperlukan oleh protokol autentikasi yang aman.
+
+Jangan menaruh service role key atau secret lain di frontend. Jangan menganggap tanggal lahir sebagai faktor autentikasi yang kuat karena data tersebut dapat diketahui pihak lain. Jika memungkinkan, tambahkan PIN sementara atau faktor verifikasi yang dibagikan secara aman oleh sekolah.
+
+Jika autentikasi siswa menggunakan custom session melalui Edge Function, jelaskan secara eksplisit cara membuat, menyimpan, memvalidasi, memperpanjang, dan mencabut sesi tersebut. Jangan berpura-pura bahwa custom session otomatis menjadi sesi Supabase Auth.
+
+## 6. DASHBOARD ADMIN
+
+Buat halaman Beranda dengan kartu statistik:
+
+- Total siswa terdaftar.
+- Total kelas.
+- Total pasangan kandidat aktif.
+- Jumlah siswa yang sudah memilih.
+- Jumlah siswa yang belum memilih.
+- Persentase partisipasi.
+
+Rumus persentase partisipasi:
+
+persentase_partisipasi = jumlah_siswa_sudah_memilih / total_siswa_yang_memenuhi_syarat × 100%
+
+Tangani kasus jumlah pemilih yang memenuhi syarat sama dengan nol agar tidak terjadi pembagian nol.
+
+Tambahkan:
+- Grafik partisipasi siswa.
+- Grafik perolehan suara tiap kandidat.
+- Ringkasan periode pemilihan.
+- Waktu pembaruan data terakhir.
+- Tombol navigasi cepat ke pengelolaan siswa, kandidat, dan hasil pemilihan.
+
+Statistik harus berasal dari query database atau fungsi agregasi backend. Jangan menghitung ulang angka berdasarkan data dummy di frontend.
+
+Jangan menampilkan NISN atau identitas pemilih yang dikaitkan dengan pilihannya.
+
+## 7. MENU KELAS
+
+Buat CRUD kelas lengkap:
+
+- Daftar kelas.
+- Tambah kelas.
+- Edit kelas.
+- Detail kelas jika diperlukan.
+- Hapus kelas dengan pemeriksaan relasi.
+- Pencarian dan filter.
+- Pagination jika jumlah data besar.
+- Validasi nama kelas dan tingkat kelas.
+- Notifikasi sukses atau gagal.
+
+Setiap kelas memiliki minimal:
+- ID UUID.
+- Nama kelas.
+- Tingkat.
+- Status aktif.
+- Waktu dibuat.
+- Waktu diperbarui.
+
+Jangan menghapus kelas yang masih memiliki siswa tanpa konfirmasi dan kebijakan yang jelas. Gunakan foreign key serta aturan penghapusan yang aman.
+
+## 8. MENU SISWA/USER
+
+Buat CRUD siswa dengan field:
+
+- NISN.
+- Nama lengkap.
+- Tanggal lahir.
+- Kelas.
+- Status aktif.
+- Status hak suara: sudah memilih/belum memilih.
+- Waktu pembuatan dan pembaruan data.
+
+Fitur:
+- Tambah siswa.
+- Edit siswa.
+- Detail siswa.
+- Nonaktifkan siswa.
+- Hapus siswa jika aman dan diizinkan kebijakan.
+- Cari berdasarkan NISN atau nama.
+- Filter berdasarkan kelas dan status pemilihan.
+- Pagination.
+- Impor CSV jika memungkinkan.
+- Validasi NISN unik.
+- Validasi tanggal lahir.
+- Validasi kelas.
+- Konfirmasi sebelum penghapusan.
+
+Status pemilihan harus berasal dari data voting atau tabel partisipasi yang dikelola database, bukan checkbox bebas yang dapat memanipulasi jumlah suara.
+
+Jika menggunakan impor CSV, validasi semua baris terlebih dahulu, tampilkan pratinjau, laporkan duplikasi dan kesalahan, lalu proses melalui backend secara aman.
+
+Jangan pernah mengirim daftar lengkap siswa ke browser siswa. Admin hanya boleh mengakses data siswa sesuai hak aksesnya.
+
+## 9. MENU CALON KANDIDAT
+
+Buat CRUD pasangan kandidat dengan field:
+
+- ID UUID.
+- Nomor urut.
+- Foto pasangan kandidat.
+- Nama ketua.
+- Nama wakil ketua.
+- Visi.
+- Misi.
+- Slogan.
+- Status aktif.
+- Waktu dibuat dan diperbarui.
+
+Fitur:
+- Tambah kandidat.
+- Edit kandidat.
+- Lihat detail kandidat.
+- Hapus kandidat jika belum memiliki suara dan masih sesuai aturan.
+- Upload dan ganti foto.
+- Validasi nomor urut unik.
+- Pratinjau foto sebelum disimpan.
+- Batas ukuran file dan validasi MIME type.
+- Penanganan error upload.
+- Konfirmasi sebelum menghapus kandidat.
+
+Simpan file foto di Supabase Storage. Simpan hanya path atau identifier file di database.
+
+Gunakan bucket kandidat dengan aturan akses yang tepat. Jika foto bersifat publik, jangan menempatkan data sensitif pada bucket tersebut.
+
+Kandidat yang sudah menerima suara tidak boleh dihapus sehingga merusak integritas hasil. Kandidat tersebut dapat dinonaktifkan atau diarsipkan sesuai kebijakan.
+
+Tampilkan kandidat dalam kartu yang menarik, dengan nomor urut, foto, nama ketua dan wakil, visi, misi, dan slogan.
+
+## 10. MENU PEROLEHAN SUARA
+
+Buat halaman hasil pemilihan yang menampilkan:
+
+- Total suara sah.
+- Jumlah siswa yang telah menggunakan hak suara.
+- Persentase partisipasi.
+- Tabel perolehan suara setiap kandidat.
+- Jumlah suara tiap kandidat.
+- Persentase suara tiap kandidat.
+- Grafik batang perolehan suara.
+- Waktu pembaruan terakhir.
+
+Rumus persentase kandidat:
+
+persentase_kandidat = suara_kandidat / total_suara_sah × 100%
+
+Tangani total suara nol.
+
+Pastikan jumlah suara semua kandidat sama dengan total suara sah.
+
+Sediakan tampilan saat belum ada suara.
+
+Jika periode pemilihan belum selesai, tampilkan hasil sesuai kebijakan sekolah. Tambahkan pengaturan untuk menyembunyikan hasil sementara dari siswa jika diperlukan.
+
+Dilarang membuat tabel atau API admin yang menghubungkan siswa dengan kandidat yang dipilih.
+
+Admin hanya boleh mengetahui:
+- Siapa yang sudah memilih.
+- Siapa yang belum memilih.
+- Jumlah suara per kandidat.
+
+Jangan menyediakan fungsi pencarian suara berdasarkan siswa, NISN, waktu pemilihan yang presisi, atau identifier pemilih.
+
+## 11. MENU PENGATURAN
+
+Buat pengaturan yang dapat diubah admin:
+
+### Identitas sekolah
+- Nama sekolah.
+- Logo sekolah.
+- Nama aplikasi.
+- Warna tema jika memungkinkan.
+
+### Periode pemilihan
+- Nama periode.
+- Tanggal dan waktu mulai.
+- Tanggal dan waktu berakhir.
+- Status pemilihan.
+- Pengaturan publikasi hasil.
+
+Gunakan zona waktu Asia/Jakarta dan simpan timestamp secara konsisten dalam database, idealnya sebagai timestamptz.
+
+Backend harus memvalidasi waktu pemilihan. Jangan hanya menonaktifkan tombol voting di frontend.
+
+### Pengaturan admin
+- Ganti username jika didukung desain autentikasi.
+- Ganti password melalui alur autentikasi resmi.
+- Verifikasi password lama atau autentikasi ulang untuk perubahan sensitif.
+- Notifikasi sukses atau gagal.
+
+Jangan menyimpan password dalam tabel pengaturan aplikasi.
+
+Upload logo sekolah melalui Supabase Storage dan simpan path file dalam tabel pengaturan.
+
+Batasi perubahan konfigurasi sensitif hanya kepada admin yang terautentikasi dan berwenang.
+
+## 12. ALUR PEMILIHAN SISWA
+
+Setelah login berhasil:
+
+1. Verifikasi identitas siswa di backend.
+2. Ambil biodata siswa yang bersangkutan saja.
+3. Tampilkan nama, NISN yang disamarkan bila sesuai, kelas, dan status hak suara.
+4. Periksa status periode pemilihan.
+5. Jika pemilihan belum dimulai, tampilkan informasi bahwa pemilihan belum dibuka.
+6. Jika pemilihan telah berakhir, tampilkan informasi bahwa pemilihan telah ditutup.
+7. Jika siswa telah memilih, tampilkan pesan: "Anda sudah menggunakan hak suara".
+8. Jika siswa belum memilih dan pemilihan aktif, tampilkan tombol "Berikan Suara".
+
+Saat tombol "Berikan Suara" ditekan:
+- Buka halaman daftar kandidat.
+- Tampilkan semua kandidat aktif.
+- Tampilkan foto, nomor urut, nama ketua, nama wakil, visi, misi, dan slogan.
+- Sediakan cara memilih tepat satu pasangan calon.
+- Berikan indikator visual untuk kandidat yang dipilih.
+- Jangan menyimpan suara sebelum konfirmasi akhir.
+
+Setelah siswa memilih kandidat:
+- Tampilkan modal konfirmasi.
+- Jelaskan bahwa suara yang sudah dikirim tidak dapat diubah.
+- Tampilkan nomor urut dan informasi kandidat yang dipilih.
+- Sediakan tombol "Kembali" dan "Ya, Kirim Suara".
+- Cegah pengiriman berulang akibat klik ganda.
+
+Saat konfirmasi:
+- Kirim permintaan ke backend/RPC yang aman.
+- Verifikasi sesi dan identitas siswa.
+- Verifikasi periode pemilihan aktif.
+- Verifikasi bahwa siswa berhak memilih.
+- Verifikasi bahwa siswa belum pernah memilih.
+- Verifikasi kandidat aktif.
+- Catat suara dan status partisipasi secara atomik.
+- Jangan mengirim identitas siswa dan kandidat dalam satu record yang dapat dibaca admin.
+- Tangani konflik akibat dua request bersamaan.
+- Jika gagal, tampilkan pesan yang aman dan jangan menampilkan status sukses.
+
+Jika sukses:
+- Tampilkan pesan tepat: "Suara Anda berhasil dicatat, terima kasih telah berpartisipasi".
+- Pertahankan pesan selama 4 detik.
+- Setelah 4 detik, bersihkan sesi pemilih dari browser.
+- Hapus data sensitif dari state aplikasi.
+- Kembalikan pengguna ke halaman login siswa.
+- Pastikan status suara tetap tercatat di database.
+
+Jika siswa login kembali:
+- Tampilkan pesan "Anda sudah menggunakan hak suara".
+- Jangan tampilkan tombol "Berikan Suara".
+- Jangan izinkan pemilihan ulang, termasuk setelah refresh atau login ulang.
+
+Jika dua permintaan voting terjadi bersamaan, hanya satu yang boleh berhasil.
+
+Jangan menganggap redirect, state Vue, cookie, atau localStorage sebagai pengaman utama untuk mencegah voting ganda.
+
+## 13. DESAIN DATABASE SUPABASE
+
+Buat SQL migration yang lengkap, idempotent jika memungkinkan, dapat dijalankan ulang dengan aman sesuai desain, dan didokumentasikan.
+
+Gunakan UUID untuk primary key. Tambahkan created_at dan updated_at pada tabel yang relevan.
+
+Rancang tabel minimal berikut.
+
+### A. classes
+- id UUID PRIMARY KEY.
+- name TEXT NOT NULL.
+- grade SMALLINT atau tipe yang sesuai.
+- is_active BOOLEAN NOT NULL DEFAULT TRUE.
+- created_at TIMESTAMPTZ.
+- updated_at TIMESTAMPTZ.
+
+Tambahkan constraint nama kelas yang sesuai dan indeks untuk pencarian.
+
+### B. students
+- id UUID PRIMARY KEY.
+- nisn TEXT NOT NULL UNIQUE.
+- full_name TEXT NOT NULL.
+- birth_date DATE NOT NULL.
+- class_id UUID REFERENCES classes(id).
+- is_active BOOLEAN NOT NULL DEFAULT TRUE.
+- created_at TIMESTAMPTZ.
+- updated_at TIMESTAMPTZ.
+
+Jangan membuat tabel ini dapat dibaca publik. Lindungi tanggal lahir dan NISN.
+
+### C. admin_profiles
+- id UUID PRIMARY KEY yang terkait dengan auth.users.id.
+- username TEXT sesuai kebutuhan.
+- display_name TEXT.
+- role yang divalidasi oleh backend.
+- created_at TIMESTAMPTZ.
+- updated_at TIMESTAMPTZ.
+
+Jangan memperbolehkan user mengubah role sendiri melalui update profile.
+
+### D. candidates
+- id UUID PRIMARY KEY.
+- ballot_number INTEGER NOT NULL UNIQUE.
+- chair_name TEXT NOT NULL.
+- vice_chair_name TEXT NOT NULL.
+- photo_path TEXT.
+- vision TEXT.
+- mission TEXT.
+- slogan TEXT.
+- is_active BOOLEAN NOT NULL DEFAULT TRUE.
+- created_at TIMESTAMPTZ.
+- updated_at TIMESTAMPTZ.
+
+Tambahkan validasi nomor urut dan indeks yang diperlukan.
+
+### E. election_settings
+- id UUID PRIMARY KEY.
+- school_name TEXT NOT NULL.
+- school_logo_path TEXT.
+- election_name TEXT.
+- starts_at TIMESTAMPTZ.
+- ends_at TIMESTAMPTZ.
+- election_status yang dibatasi nilainya.
+- publish_results BOOLEAN NOT NULL DEFAULT FALSE.
+- created_at TIMESTAMPTZ.
+- updated_at TIMESTAMPTZ.
+
+Tentukan aturan konsistensi periode pemilihan. Jangan memperbolehkan periode berakhir sebelum dimulai.
+
+### F. voter_participation
+Tabel ini mencatat bahwa siswa telah menggunakan hak suara, tanpa menyimpan kandidat pilihannya.
+
+- election_id UUID atau referensi periode yang sesuai.
+- student_id UUID REFERENCES students(id).
+- cast_at TIMESTAMPTZ.
+- Primary key atau unique constraint yang memastikan satu partisipasi per siswa per pemilihan.
+
+Pastikan tabel ini tidak dapat dibaca langsung oleh siswa lain dan tidak mengungkap pilihan kandidat.
+
+### G. election_tallies
+Rancang penyimpanan agregat atau model data suara yang benar-benar menjaga kerahasiaan pilihan.
+
+Jangan menggunakan skema suara yang menghubungkan student_id dengan candidate_id dalam satu tabel yang dapat diakses admin.
+
+Pilih implementasi yang tepat:
+- Tabel tally per kandidat dengan jumlah suara yang diakumulasi secara atomik, atau
+- Tabel ballot anonim dengan identifier acak yang tidak menyimpan hubungan ke siswa, disertai pembatasan akses dan perlindungan terhadap korelasi waktu.
+
+Jika menggunakan tabel tally agregat, pastikan fungsi voting atomik memperbarui tally dan partisipasi dalam transaksi yang sama.
+
+Jika menggunakan ballot anonim, jangan menganggap penghapusan foreign key saja cukup untuk menjamin anonimitas. Dokumentasikan risiko korelasi, hak akses, log, backup, dan metadata.
+
+### H. Tabel atau struktur tambahan
+Buat tabel tambahan bila diperlukan untuk:
+- Sesi siswa.
+- Audit perubahan administratif.
+- Idempotency key.
+- Periode pemilihan tambahan.
+- Pembatasan percobaan login.
+
+Jangan mencatat tanggal lahir, token autentikasi, password, atau kandidat pilihan siswa ke log aplikasi.
+
+Tambahkan indeks untuk:
+- NISN.
+- class_id.
+- is_active.
+- ballot_number.
+- election_id.
+- created_at atau kolom waktu yang relevan.
+
+Buat trigger updated_at jika sesuai.
+
+Dokumentasikan relasi, constraint, indeks, dan strategi migrasi.
+
+## 14. ATURAN KEAMANAN VOTING
+
+Keamanan voting merupakan persyaratan utama, bukan fitur tambahan.
+
+Implementasikan fungsi PostgreSQL RPC, misalnya cast_vote, dengan karakteristik berikut:
+
+1. Menerima identitas pemilih yang telah diverifikasi server dan ID kandidat.
+2. Jangan mempercayai student_id yang dikirim bebas dari frontend.
+3. Validasi sesi atau token yang terikat dengan identitas siswa.
+4. Validasi periode pemilihan.
+5. Validasi status siswa aktif dan memenuhi syarat.
+6. Validasi kandidat aktif.
+7. Mencegah voting ganda dengan unique constraint dan mekanisme konkurensi yang benar.
+8. Memperbarui partisipasi dan tally secara atomik.
+9. Jika salah satu operasi gagal, seluruh transaksi harus rollback.
+10. Mencegah manipulasi suara melalui pemanggilan RPC berulang.
+11. Batasi EXECUTE function kepada role yang diperlukan.
+12. Gunakan search_path yang aman dan schema-qualified references untuk fungsi SECURITY DEFINER.
+13. Validasi input dan batasi hak istimewa fungsi.
+14. Jangan mengembalikan data pribadi atau tally yang tidak perlu kepada siswa.
+15. Tangani error secara konsisten tanpa membocorkan detail internal.
+
+PENTING: fungsi voting tidak boleh menerima identitas siswa arbitrer lalu mempercayainya. Jika Supabase RPC tidak memiliki identitas terverifikasi yang cukup untuk custom session siswa, panggil fungsi tersebut hanya melalui Edge Function tepercaya yang memvalidasi sesi siswa terlebih dahulu.
+
+Untuk transaksi, gunakan PostgreSQL transaction semantics dan unique constraint sebagai lapisan utama anti-duplikasi. Tambahkan row locking atau strategi konkurensi bila diperlukan.
+
+Jangan menggunakan pola "cek sudah memilih, lalu insert" tanpa perlindungan terhadap race condition.
+
+Jika menggunakan tally agregat, pastikan siswa tidak dapat mengubah tally secara langsung.
+
+Jelaskan batasan anonimitas dengan jujur: database yang memisahkan partisipasi dan tally mengurangi keterkaitan, tetapi administrator infrastruktur, superuser, atau pemilik kredensial istimewa mungkin masih dapat mengakses data operasional. Minimalkan akses dan logging, serta jangan mengklaim anonimitas matematis jika sistem tidak menyediakannya.
+
+## 15. ROW LEVEL SECURITY (RLS)
+
+Aktifkan RLS pada seluruh tabel yang menyimpan data aplikasi.
+
+Tulis policy eksplisit untuk setiap role.
+
+### Admin
+- Hanya admin terautentikasi yang berwenang dapat membaca dan mengelola kelas.
+- Hanya admin berwenang yang dapat mengelola siswa.
+- Hanya admin berwenang yang dapat mengelola kandidat.
+- Hanya admin berwenang yang dapat mengubah pengaturan sekolah.
+- Admin boleh melihat status partisipasi.
+- Admin boleh membaca tally hasil pemilihan sesuai kebijakan.
+- Admin tidak boleh mengakses hubungan siswa dengan kandidat pilihan.
+
+### Siswa
+- Siswa hanya dapat membaca biodata dirinya sendiri melalui mekanisme identitas yang diverifikasi.
+- Siswa hanya dapat membaca kandidat yang memang boleh ditampilkan.
+- Siswa tidak dapat membaca seluruh tabel siswa.
+- Siswa tidak dapat menulis langsung ke tabel partisipasi.
+- Siswa tidak dapat mengubah tally.
+- Siswa tidak dapat membaca suara individu.
+- Siswa tidak dapat mengubah role atau pengaturan.
+- Siswa tidak dapat mengakses data admin.
+
+Jika custom student session tidak terwakili dalam auth.uid(), jangan membuat RLS palsu yang menggunakan auth.uid() seolah-olah sesi tersebut adalah pengguna Supabase Auth. Gunakan desain yang benar-benar sesuai dengan mekanisme autentikasi. Semua jalur akses harus tetap melewati backend yang memvalidasi identitas.
+
+Buat SQL policy lengkap, bukan sekadar contoh komentar.
+
+Jelaskan policy mana yang menggunakan auth.uid(), fungsi helper, Edge Function, atau hak istimewa server.
+
+## 16. SUPABASE STORAGE
+
+Buat bucket terpisah bila diperlukan, misalnya:
+- school-assets.
+- candidate-photos.
+
+Terapkan:
+- Pembatasan ukuran file.
+- Validasi tipe file.
+- Kebijakan upload dan penghapusan khusus admin.
+- Kebijakan baca yang sesuai dengan kebutuhan publikasi.
+- Nama file unik.
+- Validasi path dan kepemilikan.
+- Penanganan upload gagal.
+- Pembersihan file lama yang tidak lagi digunakan jika aman.
+
+Jangan menyimpan file sensitif di bucket publik.
+
+Jangan menggunakan Supabase Service Role Key pada aplikasi Vue, file .env yang dipublikasikan, atau source map yang dapat diunduh.
+
+## 17. STRUKTUR PROYEK
+
+Gunakan struktur modular seperti berikut:
+
+eosis/
+├── public/
+├── src/
+│   ├── assets/
+│   │   └── styles/
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── AppButton.vue
+│   │   │   ├── AppModal.vue
+│   │   │   ├── AppToast.vue
+│   │   │   ├── AppTable.vue
+│   │   │   ├── AppPagination.vue
+│   │   │   ├── LoadingState.vue
+│   │   │   └── EmptyState.vue
+│   │   ├── admin/
+│   │   ├── student/
+│   │   └── charts/
+│   ├── layouts/
+│   │   ├── AdminLayout.vue
+│   │   └── StudentLayout.vue
+│   ├── pages/
+│   │   ├── auth/
+│   │   │   ├── AdminLogin.vue
+│   │   │   └── StudentLogin.vue
+│   │   ├── admin/
+│   │   │   ├── Dashboard.vue
+│   │   │   ├── Classes.vue
+│   │   │   ├── Students.vue
+│   │   │   ├── Candidates.vue
+│   │   │   ├── Results.vue
+│   │   │   └── Settings.vue
+│   │   ├── student/
+│   │   │   ├── StudentDashboard.vue
+│   │   │   ├── CandidateSelection.vue
+│   │   │   └── VoteSuccess.vue
+│   │   └── NotFound.vue
+│   ├── router/
+│   │   └── index.js
+│   ├── composables/
+│   │   ├── useAuth.js
+│   │   ├── useElection.js
+│   │   ├── useVoting.js
+│   │   └── useToast.js
+│   ├── services/
+│   │   ├── supabase.js
+│   │   ├── authService.js
+│   │   ├── classService.js
+│   │   ├── studentService.js
+│   │   ├── candidateService.js
+│   │   ├── votingService.js
+│   │   ├── resultsService.js
+│   │   └── settingsService.js
+│   ├── stores/
+│   ├── utils/
+│   ├── App.vue
+│   └── main.js
+├── supabase/
+│   ├── config.toml
+│   ├── migrations/
+│   ├── functions/
+│   │   ├── student-login/
+│   │   ├── student-session/
+│   │   ├── cast-vote/
+│   │   └── admin-import-students/
+│   └── seed.sql
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── e2e/
+├── .env.example
+├── .gitignore
+├── index.html
+├── package.json
+├── vite.config.js
+├── README.md
+└── DEPLOYMENT.md
+
+Struktur boleh disesuaikan, tetapi tanggung jawab frontend, service, backend, dan database harus tetap dipisahkan dengan jelas.
+
+Jangan membuat banyak file kosong atau file yang hanya berisi TODO. Implementasikan fungsi yang diperlukan.
+
+## 18. ROUTING DAN SESSION GUARD
+
+Buat routing minimal:
+
+- /login/admin
+- /login/siswa
+- /admin
+- /admin/kelas
+- /admin/siswa
+- /admin/kandidat
+- /admin/hasil
+- /admin/pengaturan
+- /siswa
+- /siswa/kandidat
+- /siswa/sukses
+
+Terapkan route guard untuk:
+- Memeriksa sesi aktif.
+- Memeriksa role.
+- Mengalihkan pengguna yang belum login.
+- Mencegah siswa mengakses route admin.
+- Mencegah admin memasuki alur voting siswa tanpa sesi siswa yang sah.
+- Mengarahkan siswa yang sudah memilih ke halaman status.
+- Membersihkan sesi pada logout.
+
+Route guard hanya merupakan lapisan UX tambahan. Seluruh operasi sensitif harus diverifikasi lagi di backend.
+
+Tangani navigasi langsung melalui URL, refresh halaman, sesi kedaluwarsa, dan pembukaan banyak tab.
+
+## 19. SERVICE DAN PENANGANAN ERROR
+
+Buat service modular untuk seluruh operasi data.
+
+Setiap service harus:
+- Memiliki tanggung jawab jelas.
+- Menggunakan parameter yang tervalidasi.
+- Memproses respons dan error Supabase.
+- Tidak membocorkan secret.
+- Tidak mengasumsikan operasi berhasil sebelum backend mengonfirmasi.
+- Memiliki tipe respons yang konsisten.
+- Menghindari duplikasi kode.
+
+Gunakan notifikasi yang mudah dipahami, misalnya:
+- Data berhasil disimpan.
+- Data berhasil diperbarui.
+- Data gagal dimuat.
+- Sesi telah berakhir.
+- Periode pemilihan
